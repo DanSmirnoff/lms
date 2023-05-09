@@ -59,15 +59,7 @@ class Student(models.Model):
         on_delete=models.CASCADE,
         related_name='student'
         )
-    group = models.ForeignKey(
-        StudentGroup,
-        on_delete=models.SET_NULL,
-        related_name='student',
-        verbose_name='group',
-        help_text='Group',
-        blank=True,
-        null=True
-    )
+    group = models.ManyToManyField(StudentGroup, through='StudentGroupStudent', related_name='students')
     tasks = models.ManyToManyField(Task, through="Mark")
 
     def __str__(self):
@@ -88,3 +80,8 @@ class Mark(models.Model):
         related_name='mark'
     )
     value = models.DecimalField(max_digits=5, decimal_places=2)
+
+
+class StudentGroupStudent(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student_group = models.ForeignKey(StudentGroup, on_delete=models.CASCADE)
