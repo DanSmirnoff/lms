@@ -7,7 +7,7 @@ def index(request):
     tasks = Task.objects.all()
 
     context = {
-        'tasks': tasks
+        'tasks': tasks,
     }
 
     return render(request, 'tasks/index.html', context)
